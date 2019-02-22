@@ -10,16 +10,21 @@ public class DotaFinder : MonoBehaviour
     public static string DotaPath = "";
     public static string IniName = "dotapath.ini";
 
+    public OptionManager option;
+
     [ContextMenu("Create ini")]
-    public void CreateINI()
+    public void CreateINI(int k)
     {
         string path = Application.dataPath + "/../" + IniName;
-        if (!File.Exists(path))
+
+        if (k == 1)
         {
             FindDotaReg();
-            File.WriteAllText(path, DotaPath);
-            Debug.Log("ini File Created.");
         }
+        
+        File.WriteAllText(path, DotaPath);
+        option.FreshPathShow();
+        Debug.Log("ini File Created.");
     }
 
     [ContextMenu("Load ini")]
@@ -28,7 +33,7 @@ public class DotaFinder : MonoBehaviour
         string path = Application.dataPath + "/../" + IniName;
         if (!File.Exists(path))
         {
-            CreateINI();
+            CreateINI(1);
             Debug.Log("ini File Not Found and Created a new one.");
         }
         else

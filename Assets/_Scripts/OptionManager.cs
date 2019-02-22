@@ -10,6 +10,7 @@ public class OptionManager : MonoBehaviour
     public Canvas optionsCanvas;
     public Text oldDataPath;
     public Text newDotaPath;
+    public Toggle useBot;
     public Toggle useTest;
     public Toggle waitInGame;
     public DotaFinder dotaFinder;
@@ -21,6 +22,7 @@ public class OptionManager : MonoBehaviour
 
     public static bool UseTest = true;
     public static int WaitInGame = 0;
+    public static int UseBot = 1;
 
     public void ShowOptions()
     {
@@ -35,19 +37,26 @@ public class OptionManager : MonoBehaviour
         optionsCanvas.sortingOrder = -1;
     }
 
+    public void FreshPathShow()
+    {
+        oldDataPath.text = DotaFinder.DotaPath;
+    }
+
     public void SaveOptions()
     {
-        if (File.Exists(newDotaPath.text))
+        if (File.Exists(newDotaPath.text) || File.Exists(oldDataPath.text))
         {
             DotaFinder.DotaPath = newDotaPath.text;
-            dotaFinder.CreateINI();
+            dotaFinder.CreateINI(0);
+            FreshPathShow();
         }
         else
         {
-            newDotaPath.text = "dota2.exe not found!";
+            Debug.Log("dota2.exe not found!");
         }
 
         UseTest = useTest.isOn ? true : false;
+        UseBot = useBot.isOn? 1: 0;
         WaitInGame = waitInGame.isOn ? 1: 0;
         UPDP.eport = (newExternalPort.text != "")? Convert.ToInt32(newExternalPort.text): Convert.ToInt32(oldExternalPort.text);
         UPDP.iport = (newInternalPort.text != "") ? Convert.ToInt32(newInternalPort.text) : Convert.ToInt32(oldInternalPort.text);
@@ -58,6 +67,7 @@ public class OptionManager : MonoBehaviour
         config.WriteValue("thd-launcher", "WaitInGame", WaitInGame);
         config.WriteValue("thd-launcher", "ExPort", UPDP.eport.ToString());
         config.WriteValue("thd-launcher", "InPort", UPDP.iport.ToString());
+        config.WriteValue("thd-launcher", "UseBot", UseBot);
         config.Close();
     }
 
@@ -65,9 +75,16 @@ public class OptionManager : MonoBehaviour
     {
         HideOptions();
         useTest.isOn = UseTest;
+        useBot.isOn = UseBot == 1? true: false;
 
         INIParser config = new INIParser();
         string configPath = Application.dataPath + "/../config.ini";
+
+        if (!config.IsKeyExists("thd-launcher", "UseBot"))
+        {
+            config.WriteValue("thd-launcher", "UseBot", UseBot);
+        }
+
         if (!File.Exists(configPath))
         {
             File.Create(configPath).Dispose();
@@ -76,6 +93,7 @@ public class OptionManager : MonoBehaviour
             config.WriteValue("thd-launcher", "WaitInGame", WaitInGame);
             config.WriteValue("thd-launcher", "ExPort", UPDP.eport);
             config.WriteValue("thd-launcher", "InPort", UPDP.iport);
+            config.WriteValue("thd-launcher", "UseBot", UseBot);
         }
         else
         {
@@ -84,6 +102,7 @@ public class OptionManager : MonoBehaviour
             WaitInGame = config.ReadValue("thd-launcher", "WaitInGame", "0") == "1" ? 1 : 0;
             UPDP.eport = config.ReadValue("thd-launcher", "ExPort", UPDP.eport);
             UPDP.iport = config.ReadValue("thd-launcher", "InPort", UPDP.iport);
+            UseBot = config.ReadValue("thd-launcher", "UseBot", "1") == "1" ? 1 : 0;
         }
         config.Close();
     }

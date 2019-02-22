@@ -19,7 +19,7 @@ public class DLLLoader : MonoBehaviour
     public static extern int FileLog(string info);
 
     [DllImport("thd-core")]
-    public static extern int LaunchServer(long sv_id, long wait);
+    public static extern int LaunchServer(long sv_id, long wait, long enable_bot);
 
     [DllImport("thd-core")]
     public static extern int Connect(string ip, long wait);

@@ -34,14 +34,13 @@ public class SetupScript : MonoBehaviour
             File.Delete(scriptPath);
             File.Move(tempPath, scriptPath);
             Debug.Log("New Update Found!");
-            Debug.Log("Update installed with " + DLLLoader.InstallScript());
         }
         else
         {
             Debug.Log("No Update!");
         }
 
-        DLLLoader.InstallScript();
+        Debug.Log("Update installed with " + DLLLoader.InstallScript());
         int ver = DLLLoader.GetScriptVersion(scriptPath);
         int a = ver / 100, b = ver % 100 / 10, c = ver % 10;
         Debug.Log("Now Version: " + a + "." + b + "." + c);

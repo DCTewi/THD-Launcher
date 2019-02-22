@@ -12,6 +12,6 @@ public class LaunchServer : MonoBehaviour
         updp.Create();
 
         int key = OptionManager.UseTest ? 1 : 0;
-        Debug.Log("Server Launched with " + DLLLoader.LaunchServer(key, OptionManager.WaitInGame));
+        Debug.Log("Server Launched with " + DLLLoader.LaunchServer(key, OptionManager.WaitInGame, OptionManager.UseBot));
     }
 }
