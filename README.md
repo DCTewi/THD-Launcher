@@ -1,6 +1,6 @@
 # TouhouDots-Launcher
 
-一个Unity编写的 DOTA2 - TouhouDots 的启动器。
+一个基于 Unity 的 DOTA2: TouhouDots 启动器。
 
 ### ver1.5
 
