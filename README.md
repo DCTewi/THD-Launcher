@@ -1,4 +1,7 @@
-# THD-Launcher
+# TouhouDots-Launcher
 
-一个dota2的thd启动器。
+一个Unity编写的 DOTA2 - TouhouDots 的启动器。
 
+### ver1.5
+
+重写。

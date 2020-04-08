@@ -1,0 +1,15 @@
+{
+    "name": "TouhouDotsLauncher",
+    "references": [
+        "GUID:09818206c93582b469a4b33369603581"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
